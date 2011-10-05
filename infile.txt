@@ -1,0 +1,37 @@
+enter
+submit A 1
+submit B 2
+submit C 3
+submit D 1
+submit E 1
+submit F 3
+submit G 2
+submit H 1
+print
+withdraw D
+leave
+enter
+sort-inbox
+print
+withdraw A
+print
+read
+print
+read
+submit I 1
+print
+read
+submit J 1
+read
+print
+sort-inbox
+print
+submit K 3
+submit L 2
+read
+submit M 2
+leave
+submit N 2
+submit O 2
+submit P 2
+print

@@ -1,0 +1,126 @@
+ENTERED
+Submit: A Priority: 1
+Submit: B Priority: 2
+Submit: C Priority: 3
+Submit: D Priority: 1
+Submit: E Priority: 1
+Submit: F Priority: 3
+Submit: G Priority: 2
+Submit: H Priority: 1
+-------------------------
+| CURRENT OFFICE STATUS |
+-------------------------
+READER : IDLE
+INBOX  : A B C D E F G H <-TOP
+QUEUE 1: EMPTY
+QUEUE 2: EMPTY
+QUEUE 2: EMPTY
+
+Document D removed from inbox
+LEFT
+-------------------------
+| CURRENT OFFICE STATUS |
+-------------------------
+READER : ABSENT
+INBOX  : A B C E F G H <-TOP
+QUEUE 1: EMPTY
+QUEUE 2: EMPTY
+QUEUE 2: EMPTY
+READCNT: 0
+
+ENTERED
+In Box Sorted
+-------------------------
+| CURRENT OFFICE STATUS |
+-------------------------
+READER : IDLE
+INBOX  : EMPTY
+QUEUE 1: A E H <-FRONT
+QUEUE 2: B G <- FRONT
+QUEUE 3: C F <- FRONT
+
+Document A removed from queue 1
+-------------------------
+| CURRENT OFFICE STATUS |
+-------------------------
+READER : IDLE
+INBOX  : EMPTY
+QUEUE 1: E H <-FRONT
+QUEUE 2: B G <- FRONT
+QUEUE 3: C F <- FRONT
+
+READER : START H
+
+-------------------------
+| CURRENT OFFICE STATUS |
+-------------------------
+READER : READING H
+INBOX  : EMPTY
+QUEUE 1: E <-FRONT
+QUEUE 2: B G <- FRONT
+QUEUE 3: C F <- FRONT
+
+READER : START E
+
+Submit: I Priority: 1
+-------------------------
+| CURRENT OFFICE STATUS |
+-------------------------
+READER : READING E
+INBOX  : I <-TOP
+QUEUE 1: EMPTY
+QUEUE 2: B G <- FRONT
+QUEUE 3: C F <- FRONT
+
+READER : START G
+
+Submit: J Priority: 1
+READER : START B
+
+-------------------------
+| CURRENT OFFICE STATUS |
+-------------------------
+READER : READING B
+INBOX  : I J <-TOP
+QUEUE 1: EMPTY
+QUEUE 2: EMPTY
+QUEUE 3: C F <- FRONT
+
+In Box Sorted
+-------------------------
+| CURRENT OFFICE STATUS |
+-------------------------
+READER : IDLE
+INBOX  : EMPTY
+QUEUE 1: I J <-FRONT
+QUEUE 2: EMPTY
+QUEUE 3: C F <- FRONT
+
+Submit: K Priority: 3
+Submit: L Priority: 2
+READER : START J
+
+Submit: M Priority: 2
+LEFT
+-------------------------
+| CURRENT OFFICE STATUS |
+-------------------------
+READER : ABSENT
+INBOX  : K L M <-TOP
+QUEUE 1: I <-FRONT
+QUEUE 2: EMPTY
+QUEUE 3: C F <- FRONT
+READCNT: 5
+
+Submit: N Priority: 2
+Submit: O Priority: 2
+Submit: P Priority: 2
+-------------------------
+| CURRENT OFFICE STATUS |
+-------------------------
+READER : ABSENT
+INBOX  : K L M N O P <-TOP
+QUEUE 1: I <-FRONT
+QUEUE 2: EMPTY
+QUEUE 3: C F <- FRONT
+
