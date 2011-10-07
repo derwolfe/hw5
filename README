@@ -1,0 +1,15 @@
+This project will simulate the workflow of an office. Let's say the office is a sewage plant.
+
+Bob, the lead sewage worker, has an inbox. The underlings come in and drop documents in this overflowing box. Bob can barely keep up, so he has his underlings assign a priority of 1 through 3, with one being a horrific sewer explosion and three being a floater in a filter.
+
+Bob obviously needs to read the important documents before the lesser ones. He also can only sort these out while not busying himself with another task. So, he either sorts, reads, or is out of the office. 
+
+Once he sorts the documents by priority, he sets them into a simple queue. they are stacked, and taken from the stack and placed in queue. Similar to taking a page and flipping it face down on a stack. 
+
+
+There will be three queues, each filled with documents. i
+
+The infile lists a document by name and priority. I.e. A 2. One could use an index for this, but why not search for the element directly?
+My implementation of the doubly-linked list should make it simple to find and delete the document, regardless of it's index, which seems to be the point.
+
+
