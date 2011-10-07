@@ -17,6 +17,7 @@ class Document
   Priority    priority;
 
  public:
+  Document();
   Document(std::string in_name, std::string in_priority);
         
   std::string get_name();
