@@ -12,11 +12,15 @@ class Linked_List
   {
     Document *doc;
     Node     *next;
+    Node     *prev;
   };
 
   Node *head;
+  Node *tail;
   int   size;
-
+/* the index is basically how deeply you want it to search
+ * find by depth.
+ */
   Node *find(int index);
 
  public:
