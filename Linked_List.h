@@ -5,6 +5,9 @@
 
 #include "Document.h"
 
+/* assignment called for singly linked,
+ * wanting to use my doubly linked list
+ */
 class Linked_List
 {
  private:
