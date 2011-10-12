@@ -7,13 +7,13 @@ using namespace std;
 Document::Document()
 {
   name = "";
-  priority = "";
+  priority = PRIORITY_3;
 }
 
 Document::Document(string in_name, string in_priority)
 {
   name = in_name;
-  priority = in_priority;
+  priority = convert_priority(in_priority);
 }
 
 ostream& operator<<(ostream &os, Document &document)
