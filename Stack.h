@@ -10,7 +10,7 @@
 class Stack
 {
  private:
-  Linked_List* stack;
+  Double_list* stack;
 
  public:
   Stack();

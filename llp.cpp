@@ -183,7 +183,7 @@ void Double_list::kill()
 
 
 
-Document* Double_list::pop ()
+Document* Double_list::pop()
 {
   /* WORKS!
    * 3 cases - 
@@ -251,6 +251,27 @@ void Double_list::print(ostream& os)
     cur = cur->next;
   }
 }
+
+void Double_list::print ()  
+{
+  /* for node in list,*/ 
+  Double_node *new_ptr = head;
+  cout << "List items" << endl;
+  cout << "---------- " << endl;
+  while ( new_ptr != NULL ) {
+    cout << *new_ptr->doc << endl;
+    /* if this is the tail, then stop
+     * else set the new_ptr to next
+     */
+    if ( tail == new_ptr ) {
+      break;
+    } else {
+      new_ptr = new_ptr->next;
+    }
+  }
+  cout << "---------- " << endl;
+}
+
 /* 
  * PRIVATE find method that should search the 
  * list for the data doc once found, it should 

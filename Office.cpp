@@ -9,7 +9,14 @@ using namespace std;
  */
 Office::Office()
 {
-
+//  Stack *inbox_stack = new Stack;
+//  Queue *priority_queue_one = new Queue;
+//  Queue *priority_queue_two = new Queue;
+//  Queue *priority_queue_three = new Queue;
+//  
+//  in_office = false;
+//  read_count = 0;
+//
 }
 
 Office::~Office()

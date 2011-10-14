@@ -10,7 +10,7 @@
 class Queue
 {
  private:
-  Linked_List* queue;
+  Double_list* queue;
 
  public:
   Queue();

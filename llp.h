@@ -1,7 +1,6 @@
 /*llp.h
  *#include "no_such_object_exception.h"
  */
-
 #ifndef LINKED_LIST_H
 #define LINKED_LIST_H
 
@@ -55,6 +54,8 @@ class Double_list
     Document* pop ();
 
     Document* dequeue ();
+    
+    void print ();
     
     void print (std::ostream &os);
 
