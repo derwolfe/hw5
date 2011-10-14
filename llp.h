@@ -1,9 +1,17 @@
-//llp.h
-#include "no_such_object_exception.h"
+/*llp.h
+ *#include "no_such_object_exception.h"
+ */
+
+#ifndef LINKED_LIST_H
+#define LINKED_LIST_H
+
+#include <iostream>
+
+#include "Document.h"
 
 struct Double_node 
 {
-  Document      *item; 
+  Document      *doc; 
   /* 
    * pointers to the previous and next nodes, 
    * this is the distinguishing feature of the doubly
@@ -23,7 +31,7 @@ class Double_list
      * of objects. Should the assignment operator have been overloaded
      * I cannot figure out how to call this constructor explicitly.
      */
-    Double_list ( const Double_list& a_list );
+    Double_list (const Double_list& a_list);
     
     /* destructor - basically a tail ended pop */
     ~Double_list ();
@@ -34,22 +42,23 @@ class Double_list
     /* returns the length */
     int get_length () const;
 
-    /* adds the item to the end of the list.*/
-    void item_add ( Document *new_item );
+    /* adds the doc to the end of the list.*/
+    void doc_add (Document *new_doc);
 
     /* finds then remove the  node */
-    bool remove ( string name );
+    bool remove (string name);
+
+    /* remove without providing pointer*/
+    void kill ();
    
     /* pop function - tail end pop */
-    void pop ();
-    /* returns a sought item searched by item name, i don't
-     * think this will work
-     */
-//    friend std::ostream& operator<<(std::ostream &os, Double_node &in_node);
-    
-    void print ();
+    Document* pop ();
 
-    Document* retrieve ( string name ) const;
+    Document* dequeue ();
+    
+    void print (std::ostream &os);
+
+    Document* retrieve (string name) const;
 //      throw (No_such_object_exception);
 
   private:
@@ -61,8 +70,7 @@ class Double_list
     int            size;
     Double_node   *head;
     Double_node   *tail;
-    Double_node   *find ( string name ) const;
+    Double_node   *find (string name) const;
 };
 
-
-
+#endif
