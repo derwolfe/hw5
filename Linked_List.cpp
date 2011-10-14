@@ -2,16 +2,13 @@
 
 using namespace std;
 
-Linked_List::Linked_List()
+Linked_List::Linked_List() : size(0), head(NULL), tail(NULL) 
 {
-  size = 0;
-  head = NULL;
-  tail = NULL; // add the tail
 }
 
 Linked_List::~Linked_List()
 {
-   while ( !is_empty ()) {
+   while (!is_empty ()) {
     remove (0);     
   }
 }
@@ -19,7 +16,6 @@ Linked_List::~Linked_List()
 void Linked_List::print(ostream& os)
 {
   Node* cur = head;
-
   while (cur != NULL) {
     os << cur->doc->get_name() << " ";
     cur = cur->next;
@@ -49,7 +45,7 @@ void Linked_List::insert(int index, Document* document)
    * use a zero based index, i.e. head = 0.
    */
   Node *node = new Node; 
-  node->doc   = document;
+  node->doc = document;
   if (size == 0) {
     head = node;
     tail = node;
@@ -65,19 +61,19 @@ void Linked_List::insert(int index, Document* document)
   } else if ((size > 0) && (index == 0)) {
     node->next = head;
     head = node;
-  } else if ((size > 0) && (index < size )) {
+  } else if ((size > 0) && (index < size)) {
     /* find node at index - 1, set pointers
      * insert to head has been handled, so this 
      * case will not handle it
      * this also ignores insert to tail, by checking if
      * index < size. 
      */
-    Node *target_prev = find (index - 1);
-    node->next = target->next;
-    target->next = node;
+    Node *preceding = find(index - 1);
+    node->next = preceding->next;
+    preceding->next = node;
     /* the tail pointer gives quick access to the node
      */
-  } else if ((size > 0) && ( index >= size )) {
+  } else if ((size > 0) && (index >= size)) {
     tail->next = node;
     node->next = NULL;
     tail = node;
@@ -85,20 +81,37 @@ void Linked_List::insert(int index, Document* document)
   size++;
 }
 /* find will be a utility function employed by remove
+ * and insert
  */
 Linked_List::Node* Linked_List::find(int index)
 {
-
+  if ( index < 0 || index > get_size()) {
+    return null;
+  } else if (get_size() > 0) {
+    int count = 0;
+    Node *target = head;
+    while (count < size) {
+      target = target->head;
+      count++;
+    }
+    return target;
+  }
 }
+
+/* use find, dump node pointer
+ */
 void Linked_List::remove(int index)
 { 
 
 }
-/* find the item using FIND, then delete it
+/* find the item using FIND, take its pointer
+ * then delete it, and deallocate.
  */
 bool Linked_List::remove(string name)
 {
-
+  Node* target = find(string name);
+  remove (target);
+  return true;
 }
 
 /* public method that returns the actual data item
@@ -107,5 +120,5 @@ bool Linked_List::remove(string name)
  */
 Document* Linked_List::retrieve(int index)
 {
-
+  return find(index);
 }
