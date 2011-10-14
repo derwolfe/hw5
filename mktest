@@ -1,0 +1,3 @@
+g++ -g -c llp.cpp Document.cpp doc_test.cpp 
+g++ Document.o llp.o doc_test.o  -o test
+

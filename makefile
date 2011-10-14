@@ -2,7 +2,7 @@
 # The executable is built when only "make" is typed. The two test
 # targets will rebuild the executable as needed. 
 #
-KUID = CHANGE_ME_TO_YOUR_KUID
+KUID = 2054583 
 LAB_NAME = stacks_and_queues
 
 all: office_sim
