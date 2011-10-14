@@ -34,7 +34,9 @@ Priority Document::convert_priority(string str_priority)
     return PRIORITY_2;
   } else if (str_priority.compare("3") == 0) {
     return PRIORITY_3;
-  }
+  } else {
+    return PRIORITY_3;
+  } 
 }
 
 Priority Document::get_priority()
