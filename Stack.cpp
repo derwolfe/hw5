@@ -39,3 +39,7 @@ bool Stack::withdraw(std::string name)
   stack->remove(name);
 }
 
+/* implement a retrieve/peep/function that returns a pointer to an 
+ * item. This way you can check for an item, and remvoe it if != null;
+ */
+
