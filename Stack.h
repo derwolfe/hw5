@@ -4,7 +4,8 @@
 #include <string>
 
 #include "Document.h"
-#include "Linked_List.h"
+//#include "Linked_List.h"
+#include "llp.h"
 
 class Stack
 {

@@ -4,12 +4,12 @@ using namespace std;
 
 Stack::Stack()
 {
-
+  Double_list* stack = new Double_list;
 }
 
 Stack::~Stack()
 {
-
+  delete stack;
 }
 
 ostream& operator<<(ostream &os, Stack &in_stack)
@@ -21,22 +21,21 @@ ostream& operator<<(ostream &os, Stack &in_stack)
 
 void Stack::push(Document* document)
 {
-
+  stack->item_add(document);
 }
 
 Document* Stack::pop()
 {
-
+  stack->pop();
 }
 
 bool Stack::is_empty()
 {
-
+  stack->is_empty();
 }
 
 bool Stack::withdraw(std::string name)
 {
-
+  stack->remove(name);
 }
-
 
