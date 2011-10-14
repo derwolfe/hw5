@@ -9,19 +9,28 @@ using namespace std;
  */
 Office::Office()
 {
-//  Stack *inbox_stack = new Stack;
-//  Queue *priority_queue_one = new Queue;
-//  Queue *priority_queue_two = new Queue;
-//  Queue *priority_queue_three = new Queue;
-//  
-//  in_office = false;
-//  read_count = 0;
-//
+  Stack *inbox_stack = new Stack;
+  Queue *priority_queue_one = new Queue;
+  Queue *priority_queue_two = new Queue;
+  Queue *priority_queue_three = new Queue;
+  
+  in_office = false;
+  read_count = 0;
+  Document* current_document = NULL;
 }
 
+/* what all needs to be deconstructed and deallocated? anything with new, kill
+ */
 Office::~Office()
 {
+  delete inbox_stack;
+  delete priority_queue_one;
+  delete priority_queue_two;
+  delete priority_queue_three;
 
+  in_office = false;
+  read_count = 0;
+  Document* current_document = NULL;
 }
 
 /*
@@ -116,20 +125,30 @@ void Office::leave()
 
 int Office::get_read_count()
 {
-
+  return read_count;
 }
 
+/* takes the info from fin, parses, shoots here. Then it uses
+ * the native linked list push function.
+ */
 void Office::submit_document(string name, string priority)
 {
-
+  
+  inbox_stack->push(name, priority);
 }
 
+/* 
+ *  Read the highest priority document from the available queue.
+ *  if queue 1 has docs, read them, if not, q2, if not, q3, if not no docs!
+ */
 void Office::read_document()
 {
 
   /*
    * These are the narrative ouput messages you will need for this
    * routine, but you have to figure out the controlling code.
+   *
+   * Go through each of the queues, if one is empty move on to the next.
    */
       cout << "No more documents to read" << endl;
 
@@ -146,9 +165,25 @@ void Office::sort_inbox()
   /*
    * These are the narrative ouput messages you will need for this
    * routine, but you have to figure out the controlling code.
+   *
+   * for each of the documents in the stack, beginning with the top, 
+   * pop it off of the stack, and enqueue it based on priority
    */
+  int inc = inbox_stack->get_length();
+  while (inc >= 0) {
+   Document* target  = inbox_stack->pop();
+   if (target->get_priority() == PRIORITY_1) {
+      priority_queue_one->enqueue(target);
+    } else if (target->get_priority() == PRIORITY_2) {
+      priority_queue_two->enqueue(target);
+    } else if (target->get_priority() == PRIORITY_3) {
+      priority_queue_three->enqueue(target);
+    } else {
       cout << "Error: bad priority on document:" << cur << endl;
+    }
+  }
 }
+  
 
 void Office::withdraw_document(string name)
 {
@@ -156,19 +191,52 @@ void Office::withdraw_document(string name)
   /*
    * These are the narrative ouput messages you will need for this
    * routine, but you have to figure out the controlling code.
+   *
+   * Each of these statements is meant to try to find the document in the
+   * stack, if it does, it should remove it from the stack, otherwise, check the
+   * next stack.
    */
-  
+  Document* target = inbox_stack->retrieve(name);
+  if (target == NULL) {
+    continue;
+  } else { 
+    inbox_stack->remove(name);
     cout << "Document " << name << " removed from inbox" << endl;
-
+    target = NULL;
+    break;
+  }
+  
+  Document* target = priority_queue_one->retrieve(name);
+  if (target == NULL) {
+    continue;
+  } else { 
+    priority_queue_one->remove(name);
     cout << "Document " << name << " removed from queue 1" << endl;
+    target = NULL;
+    break;
+  }
 
+  Document* target = priority_queue_two->retrieve(name);
+  if (target == NULL) {
+    continue;
+  } else {
+    priority_queue_two->remove(name);
     cout << "Document " << name << " removed from queue 2" << endl;
+    target = NULL;
+    break;
+  }
 
+  Document* target = priority_queue_three->retrieve(name);
+  if (target == NULL) {
+    continue;
+  } else { 
+    priority_queue_three->remove(name);
     cout << "Document " << name << " removed from queue 3" << endl;
-
+    target = NULL;
+    break;
+  } else {
     cout << "Document " << name << " was not found" << endl;
-
-
+  }
 }
 
 
