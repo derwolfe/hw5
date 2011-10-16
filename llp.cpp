@@ -168,9 +168,9 @@ void Double_list::kill()
     Double_node *target = tail;
     if (size > 1) {
       tail    = tail->prev;
+      size--;
       delete target;
       target  = NULL;
-      size--;
     } else if (size == 1) {
       delete target;
       tail    = NULL;
@@ -192,23 +192,26 @@ Document* Double_list::pop()
    * (3) more than one element in list
    */
   if (is_empty()) {
-    //size = 0;
+    size = 0;
     return NULL;
   } else {
     Double_node *target = tail;
+    Document* doc;
     if (size > 1) {
-      tail    = tail->prev;
-      return target->doc;
+      tail = tail->prev;
+      doc = target->doc;
       delete target;
-      target  = NULL;
+      target = NULL;
       size--;
+      return doc;
     } else if (size == 1) {
-      return target->doc;
+      doc = target->doc; 
       delete target;
       tail    = NULL;
       head    = NULL;
       target  = NULL;
       size    = 0;
+      return doc;
     }
   }
 }
