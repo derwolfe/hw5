@@ -20,6 +20,7 @@ class Queue
   void      enqueue(Document* document);
   bool      is_empty();
   bool      withdraw(std::string name);
+  Document* peek(std::string name);
 
   friend std::ostream& operator<<(std::ostream &os, Queue &in_queue);
 };

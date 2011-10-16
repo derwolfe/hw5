@@ -192,7 +192,7 @@ Document* Double_list::pop()
    * (3) more than one element in list
    */
   if (is_empty()) {
-    size = 0;
+    //size = 0;
     return NULL;
   } else {
     Double_node *target = tail;
@@ -309,11 +309,11 @@ Double_node* Double_list::find (string name) const
  */
 Document* Double_list::retrieve(string name) const //throw(No_such_object_exception)
 {
-  Double_node *found = find (name);
+  Double_node *found = find(name);
   if (found == NULL) {
     return NULL;
 //    throw No_such_object_exception
-//      ("No_such_object_exception: the object you seek doesn't exist");
+      ("No_such_object_exception: the object you seek doesn't exist");
   } else {
     return found->doc;
   }

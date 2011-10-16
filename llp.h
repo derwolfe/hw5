@@ -45,7 +45,7 @@ class Double_list
     void doc_add (Document *new_doc);
 
     /* finds then remove the  node */
-    bool remove (string name);
+    bool remove (std::string name);
 
     /* remove without providing pointer*/
     void kill ();
@@ -59,10 +59,10 @@ class Double_list
     
     void print (std::ostream &os);
 
-    Document* retrieve (string name) const;
+    Document* retrieve (std::string name) const;
 //      throw (No_such_object_exception);
 
-  private:
+  protected:
 
     /* 
      * the total size of the list
@@ -71,7 +71,7 @@ class Double_list
     int            size;
     Double_node   *head;
     Double_node   *tail;
-    Double_node   *find (string name) const;
+    Double_node   *find (std::string name) const;
 };
 
 #endif
