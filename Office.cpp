@@ -9,17 +9,18 @@ using namespace std;
  */
 Office::Office()
 {
-  Stack *inbox_stack = new Stack;
-  Queue *priority_queue_one = new Queue;
-  Queue *priority_queue_two = new Queue;
-  Queue *priority_queue_three = new Queue;
+  inbox_stack = new Stack;
+  priority_queue_one = new Queue;
+  priority_queue_two = new Queue;
+  priority_queue_three = new Queue;
   
   in_office = false;
   read_count = 0;
   Document* current_document = NULL;
 }
 
-/* what all needs to be deconstructed and deallocated? anything with new, kill
+/* what all needs to be deconstructed and deallocated? 
+ * anything with new, delete.
  */
 Office::~Office()
 {
@@ -95,7 +96,6 @@ ostream& operator<<(std::ostream &os, Office &office)
   } else {
     os << "QUEUE 2: EMPTY" << endl;
   }
-
   return os;
 }
 
@@ -104,13 +104,19 @@ ostream& operator<<(std::ostream &os, Office &office)
  */
 void Office::enter()
 {
-
   /*
    * These are the narrative ouput messages you will need for this
    * routine, but you have to figure out the controlling code.
+   *
+   * 2 scenarios, either in or out of office.
    */
+  if (in_office == true) {  
     cout << "Error: someone is already in the office" << endl;
     cout << "You cannot enter until he leaves" << endl;
+  } else if (in_office == false) {
+    in_office = true;
+    cout << "You have entered the office" << endl;
+  }
 }
 
 void Office::leave()
@@ -120,7 +126,11 @@ void Office::leave()
    * These are the narrative ouput messages you will need for this
    * routine, but you have to figure out the controlling code.
    */
+  if (in_office == true) {
+    in_office = false;
+  } else {
     cout << "Error: there is nobody in the office to leave" << endl;
+  }
 }
 
 int Office::get_read_count()
@@ -133,8 +143,8 @@ int Office::get_read_count()
  */
 void Office::submit_document(string name, string priority)
 {
-  
-  inbox_stack->push(name, priority);
+  Document *doc = new Document(name, priority);
+  inbox_stack->push(doc);
 }
 
 /* 
@@ -143,20 +153,36 @@ void Office::submit_document(string name, string priority)
  */
 void Office::read_document()
 {
-
   /*
    * These are the narrative ouput messages you will need for this
    * routine, but you have to figure out the controlling code.
    *
    * Go through each of the queues, if one is empty move on to the next.
+   * also, if no worker is in the office, no one can read.
+   *
    */
+  if (in_office) {
+    if (priority_queue_one->is_empty() &&
+        priority_queue_two->is_empty() &&
+        priority_queue_three->is_empty()) {
       cout << "No more documents to read" << endl;
-
+    } else {
+      if (!priority_queue_one->is_empty()) {
+        current_document = priority_queue_one->dequeue();
+        read_count++;
+      } else if (!priority_queue_two->is_empty()) {
+        current_document = priority_queue_two->dequeue();
+        read_count++;
+      } else if (!priority_queue_three->is_empty()) {
+        current_document = priority_queue_three->dequeue();
+        read_count++;
+      }
       cout << "READER : START " << current_document->get_name() 
            << endl << endl;
-
+    }
+  } else { 
     cout << "Error: cannot read when nobody is in the office" << endl;
-
+  }
 }
 
 void Office::sort_inbox()
@@ -168,20 +194,32 @@ void Office::sort_inbox()
    *
    * for each of the documents in the stack, beginning with the top, 
    * pop it off of the stack, and enqueue it based on priority
+   *
+   * pop should be decrementing size of inbox_stack, but I don't know if it
+   * is.
    */
-  int inc = inbox_stack->get_length();
-  while (inc >= 0) {
-   Document* target  = inbox_stack->pop();
-   if (target->get_priority() == PRIORITY_1) {
+  Document* target;
+  /* Pop isn't actually popping!
+   */
+ // while (!inbox_stack->is_empty()) {
+  for (int i = 0; i < 6; i++) { 
+    target = inbox_stack->pop();
+    cout << *target << endl;
+    if (target->get_priority() == PRIORITY_1) {
       priority_queue_one->enqueue(target);
+    
     } else if (target->get_priority() == PRIORITY_2) {
       priority_queue_two->enqueue(target);
+    
     } else if (target->get_priority() == PRIORITY_3) {
       priority_queue_three->enqueue(target);
-    } else {
-      cout << "Error: bad priority on document:" << cur << endl;
+ //   } else {
+ //     cout << "Error: bad priority on document:" << target << endl;
     }
-  }
+  } cout << *inbox_stack << endl;
+    cout << *priority_queue_one << endl;
+    cout << *priority_queue_two << endl;
+    cout << *priority_queue_three << endl;
 }
   
 
@@ -193,50 +231,34 @@ void Office::withdraw_document(string name)
    * routine, but you have to figure out the controlling code.
    *
    * Each of these statements is meant to try to find the document in the
-   * stack, if it does, it should remove it from the stack, otherwise, check the
-   * next stack.
+   * stack, if it does, it should remove it from the stack, 
+   * otherwise, check the next structure.
    */
-  Document* target = inbox_stack->retrieve(name);
-  if (target == NULL) {
-    continue;
-  } else { 
-    inbox_stack->remove(name);
+  Document* stack_target = inbox_stack->peek(name);
+  Document* p1_target = priority_queue_one->peek(name);
+  Document* p2_target = priority_queue_two->peek(name);
+  Document* p3_target = priority_queue_three->peek(name);
+
+  if (stack_target != NULL) {
+    inbox_stack->withdraw(name);
     cout << "Document " << name << " removed from inbox" << endl;
-    target = NULL;
-    break;
-  }
-  
-  Document* target = priority_queue_one->retrieve(name);
-  if (target == NULL) {
-    continue;
-  } else { 
-    priority_queue_one->remove(name);
+  } else if (p1_target != NULL) {
+    priority_queue_one->withdraw(name);
     cout << "Document " << name << " removed from queue 1" << endl;
-    target = NULL;
-    break;
-  }
-
-  Document* target = priority_queue_two->retrieve(name);
-  if (target == NULL) {
-    continue;
-  } else {
-    priority_queue_two->remove(name);
+  } else if (p2_target != NULL) {
+    priority_queue_two->withdraw(name);
     cout << "Document " << name << " removed from queue 2" << endl;
-    target = NULL;
-    break;
-  }
-
-  Document* target = priority_queue_three->retrieve(name);
-  if (target == NULL) {
-    continue;
-  } else { 
-    priority_queue_three->remove(name);
+  } else if (p3_target != NULL) {
+    priority_queue_three->withdraw(name);
     cout << "Document " << name << " removed from queue 3" << endl;
-    target = NULL;
-    break;
   } else {
     cout << "Document " << name << " was not found" << endl;
   }
-}
+  stack_target = NULL;
+  p1_target = NULL;
+  p2_target = NULL;
+  p3_target = NULL;
+} 
+
 
 
