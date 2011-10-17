@@ -115,7 +115,7 @@ void Office::enter()
     cout << "You cannot enter until he leaves" << endl;
   } else if (in_office == false) {
     in_office = true;
-    cout << "You have entered the office" << endl;
+//   cout << "You have entered the office" << endl;
   }
 }
 
@@ -201,25 +201,19 @@ void Office::sort_inbox()
   Document* target;
   /* Pop isn't actually popping!
    */
- // while (!inbox_stack->is_empty()) {
-  for (int i = 0; i < 6; i++) { 
+  while (!inbox_stack->is_empty()) {
     target = inbox_stack->pop();
-    cout << *target << endl;
     if (target->get_priority() == PRIORITY_1) {
       priority_queue_one->enqueue(target);
-    
     } else if (target->get_priority() == PRIORITY_2) {
       priority_queue_two->enqueue(target);
-    
     } else if (target->get_priority() == PRIORITY_3) {
       priority_queue_three->enqueue(target);
- //   } else {
- //     cout << "Error: bad priority on document:" << target << endl;
+    
+    } else {
+      cout << "Error: bad priority on document:" << target << endl;
     }
-  } cout << *inbox_stack << endl;
-    cout << *priority_queue_one << endl;
-    cout << *priority_queue_two << endl;
-    cout << *priority_queue_three << endl;
+  } 
 }
   
 
