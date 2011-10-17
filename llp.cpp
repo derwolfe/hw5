@@ -115,10 +115,14 @@ void Double_list::enqueue(Document* new_doc)
    * change because of the tail-addition.
    */
   } else if (size > 0) {
-    data_ptr->next  = head;
-    head->prev      = data_ptr;
-    data_ptr->prev  = NULL;
-    head            = data_ptr;
+    data_ptr->prev = tail;
+    data_ptr->next = NULL;
+    tail->next = data_ptr;
+    tail = data_ptr;
+//    data_ptr->next  = head;
+//    head->prev      = data_ptr;
+//    data_ptr->prev  = NULL;
+//    head            = data_ptr;
   }
   size++;
 }
@@ -214,26 +218,26 @@ Document* Double_list::pop()
    * (2) one element in list
    * (3) more than one element in list
    */
-  if (is_empty()) {
+  if ( size == 0) {
     size = 0;
     return NULL;
   } else {
     Double_node *target = tail;
     Document* doc;
     if (size > 1) {
-      tail = tail->prev;
       doc = target->doc;
+      tail = tail->prev;
       delete target;
-      target = NULL;
+   //   target = NULL;
       size--;
       return doc;
     } else if (size == 1) {
-      doc = target->doc; 
+      doc = head->doc; 
       delete target;
-      tail    = NULL;
-      head    = NULL;
-      target  = NULL;
-      size    = 0;
+      tail = NULL;
+      head = NULL;
+   //   target  = NULL;
+      size = 0;
       return doc;
     }
   }
@@ -241,6 +245,9 @@ Document* Double_list::pop()
 
 /*
  * pop from head, return pointer to doc.
+ * the problem is, front is pointing to the TAIL 
+ * in main.cpp, not the technical head. So you need to switch your
+ * en/dequeue functions around.
  */
 Document* Double_list::dequeue()
 {
@@ -248,11 +255,15 @@ Document* Double_list::dequeue()
     size = 0;
     return NULL;
   } else {
+    /* done for formatting purposes
+     * currently my list reads left to r, 
+     * with head being LEFT
+     */
     Double_node *target = head;
     Document* doc;
     if (size > 1) {
-      head = head->next;
       doc = target->doc;
+      head = head->next;
       delete target;
       target = NULL;
       size--;
