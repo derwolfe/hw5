@@ -112,17 +112,19 @@ void Double_list::enqueue(Document* new_doc)
     data_ptr->next = NULL;
   /* 
    * CASE 2 - add on to the end. The head pointer doesn't
-   * change because of the tail-addition.
+   * change because of the tail-addition. -- Also,
+   * this will affect formatting. Formatting now correct. Fixing 
+   * dequeue. 
    */
   } else if (size > 0) {
-    data_ptr->prev = tail;
-    data_ptr->next = NULL;
-    tail->next = data_ptr;
-    tail = data_ptr;
-//    data_ptr->next  = head;
-//    head->prev      = data_ptr;
-//    data_ptr->prev  = NULL;
-//    head            = data_ptr;
+//    data_ptr->prev = tail;
+//    data_ptr->next = NULL;
+//    tail->next = data_ptr;
+//    tail = data_ptr;
+    data_ptr->next = head;
+    head->prev = data_ptr;
+    data_ptr->prev = NULL;
+    head = data_ptr;
   }
   size++;
 }
@@ -218,7 +220,7 @@ Document* Double_list::pop()
    * (2) one element in list
    * (3) more than one element in list
    */
-  if ( size == 0) {
+  if (is_empty()) {
     size = 0;
     return NULL;
   } else {
@@ -228,7 +230,7 @@ Document* Double_list::pop()
       doc = target->doc;
       tail = tail->prev;
       delete target;
-   //   target = NULL;
+      target = NULL;
       size--;
       return doc;
     } else if (size == 1) {
@@ -236,7 +238,7 @@ Document* Double_list::pop()
       delete target;
       tail = NULL;
       head = NULL;
-   //   target  = NULL;
+      target  = NULL;
       size = 0;
       return doc;
     }
@@ -255,14 +257,17 @@ Document* Double_list::dequeue()
     size = 0;
     return NULL;
   } else {
-    /* done for formatting purposes
-     * currently my list reads left to r, 
-     * with head being LEFT
-     */
+     /* the list is input backwards. change how items are added so it looks
+      * pretty enough for the test to pass. HEAD IS BY convention the end of
+      * the queue. i.e.  head -> elements -> tail <FRONT
+      */
     Double_node *target = head;
+//    Double_node *target = tail;
+    // tail pointer isn't being set correctly, right now it is NULL!
     Document* doc;
     if (size > 1) {
       doc = target->doc;
+//      tail = target->prev;
       head = head->next;
       delete target;
       target = NULL;
