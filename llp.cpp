@@ -113,18 +113,17 @@ void Double_list::enqueue(Document* new_doc)
   /* 
    * CASE 2 - add on to the end. The head pointer doesn't
    * change because of the tail-addition. -- Also,
-   * this will affect formatting. Formatting now correct. Fixing 
-   * dequeue. 
+   * this will affect formatting.    
    */
   } else if (size > 0) {
-//    data_ptr->prev = tail;
-//    data_ptr->next = NULL;
-//    tail->next = data_ptr;
-//    tail = data_ptr;
-    data_ptr->next = head;
-    head->prev = data_ptr;
-    data_ptr->prev = NULL;
-    head = data_ptr;
+    data_ptr->prev = tail;
+    data_ptr->next = NULL;
+    tail->next = data_ptr;
+    tail = data_ptr;
+//    data_ptr->next = head;
+//    head->prev = data_ptr;
+//    data_ptr->prev = NULL;
+//    head = data_ptr;
   }
   size++;
 }
@@ -296,6 +295,29 @@ void Double_list::print(ostream& os)
     cur = cur->next;
   }
 }
+/* modified for queue, i = 0 is from head to tail, i = 1 tail to head
+ */
+void Double_list::print_both(ostream& os, int i)
+{
+  Double_node* cur; 
+  if (i == 0) {
+    cur = head;
+    while (cur != NULL) {
+      os << cur->doc->get_name() << " ";
+      cur = cur->next;
+    }
+  } else if (i == 1) {
+    cur = tail;
+    while (cur != NULL) {
+      os << cur->doc->get_name() << " ";
+      cur = cur->prev;
+    }
+  }
+}
+
+
+
+//void Double_list::print_back(ostream& os)
 
 /* 
  * PRIVATE find method that should search the 
