@@ -101,6 +101,29 @@ void Double_list::doc_add (Document *new_doc)
   size++;
 }
 
+void Double_list::enqueue(Document* new_doc)
+{
+  Double_node *data_ptr = new Double_node;
+  data_ptr->doc = new_doc;
+  if (size == 0) {
+    head           = data_ptr;
+    tail           = data_ptr;
+    data_ptr->prev = NULL;
+    data_ptr->next = NULL;
+  /* 
+   * CASE 2 - add on to the end. The head pointer doesn't
+   * change because of the tail-addition.
+   */
+  } else if (size > 0) {
+    data_ptr->next  = head;
+    head->prev      = data_ptr;
+    data_ptr->prev  = NULL;
+    head            = data_ptr;
+  }
+  size++;
+}
+ 
+
 bool Double_list::remove (string name)
 {
   /* WORKS!!!!!!
@@ -167,16 +190,16 @@ void Double_list::kill()
   } else {
     Double_node *target = tail;
     if (size > 1) {
-      tail    = tail->prev;
+      tail = tail->prev;
       size--;
       delete target;
-      target  = NULL;
+      target = NULL;
     } else if (size == 1) {
       delete target;
-      tail    = NULL;
-      head    = NULL;
-      target  = NULL;
-      size    = 0;
+      tail = NULL;
+      head = NULL;
+      target = NULL;
+      size = 0;
     }
   }
 }
@@ -226,19 +249,22 @@ Document* Double_list::dequeue()
     return NULL;
   } else {
     Double_node *target = head;
+    Document* doc;
     if (size > 1) {
       head = head->next;
-      return target->doc;
-      delete head;
+      doc = target->doc;
+      delete target;
       target = NULL;
       size--;
+      return doc;
     } else if (size == 1) {
-      return target->doc;
+      doc = target->doc;
       delete target;
       tail = NULL;
       head = NULL;
       target = NULL;
       size = 0;
+      return doc;
     }
   }
 }
@@ -253,26 +279,6 @@ void Double_list::print(ostream& os)
     os << cur->doc->get_name() << " ";
     cur = cur->next;
   }
-}
-
-void Double_list::print ()  
-{
-  /* for node in list,*/ 
-  Double_node *new_ptr = head;
-  cout << "List items" << endl;
-  cout << "---------- " << endl;
-  while ( new_ptr != NULL ) {
-    cout << *new_ptr->doc << endl;
-    /* if this is the tail, then stop
-     * else set the new_ptr to next
-     */
-    if ( tail == new_ptr ) {
-      break;
-    } else {
-      new_ptr = new_ptr->next;
-    }
-  }
-  cout << "---------- " << endl;
 }
 
 /* 
