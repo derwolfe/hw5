@@ -110,7 +110,7 @@ int main(int argc, char* argv[])
        * reflect how many documents the worker read since arriving at
        * the office.
        *
-       * FIXME: I think Leaving should imply that the worker has
+       * FIXED: See office::leave, I think Leaving should imply that the worker has
        * finished the current document
        */
       office->leave();
@@ -142,7 +142,7 @@ int main(int argc, char* argv[])
        * Worker Bee decides to sort the in-box rather than read the
        * next document
        *
-       * FIXME: I think sorting the in_box should imply the worker has
+       * FIXED: See office::sort_inbox, I think sorting the in_box should imply the worker has
        * finished the current document.
        */
       office->sort_inbox();

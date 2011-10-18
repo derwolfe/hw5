@@ -1,23 +1,26 @@
 #include "Queue.h"
 
-using namespace std;
-/* for some reason, it is seg faulting on all operations that require the size
- * variable local to the double list. I am unsure of why.
+/* 
+ * Functions as a wrapper for all list functions
  */
+using namespace std;
+
 Queue::Queue()
 {
   queue = new Double_list();
-//  cout << queue->get_length() << endl;
 }
 
 Queue::~Queue()
 {
-//  delete queue; 
+  delete queue; 
 }
 
+/* 
+ * This is needed to read the list backwards.
+ */
 ostream& operator<<(ostream &os, Queue &in_queue)
 {
-  in_queue.queue->print(os);
+  in_queue.queue->print_back(os);
   return os;
 }
 

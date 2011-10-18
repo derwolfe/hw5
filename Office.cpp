@@ -128,6 +128,9 @@ void Office::leave()
    */
   if (in_office == true) {
     in_office = false;
+    /* should fix sate variable
+     */
+    current_document = NULL;
   } else {
     cout << "Error: there is nobody in the office to leave" << endl;
   }
@@ -195,12 +198,11 @@ void Office::sort_inbox()
    * for each of the documents in the stack, beginning with the top, 
    * pop it off of the stack, and enqueue it based on priority
    *
-   * pop should be decrementing size of inbox_stack, but I don't know if it
-   * is.
+   * If the inbox is being sorted, that means the current doc should have 
+   * been read.
    */
   Document* target;
-  /* Pop isn't actually popping!
-   */
+  current_document = NULL;
   while (!inbox_stack->is_empty()) {
     target = inbox_stack->pop();
     if (target->get_priority() == PRIORITY_1) {

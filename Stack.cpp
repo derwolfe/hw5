@@ -38,12 +38,12 @@ bool Stack::withdraw(std::string name)
 {
   stack->remove(name);
 }
-
+/* 
+ * Peek an item - useful for retrieve remove. Could have been implemented in
+ * remove. But, I would prefer to check first outside of the remove function.
+ */
 Document* Stack::peek(std::string name)
 {
   return stack->retrieve(name);
 }
-/* implement a retrieve/peep/function that returns a pointer to an 
- * item. This way you can check for an item, and remvoe it if != null;
- */
 

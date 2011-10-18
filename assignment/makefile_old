@@ -7,23 +7,23 @@ LAB_NAME = stacks_and_queues
 
 all: office_sim
 
-office_sim: main.o Office.o Stack.o Queue.o LinkedList.o Document.o
-	g++ -g main.o Office.o Stack.o Queue.o LinkedList.o Document.o -o office_sim
+office_sim: main.o Office.o Stack.o Queue.o Linked_List.o Document.o
+	g++ -g main.o Office.o Stack.o Queue.o Linked_List.o Document.o -o office_sim
 
 Document.o: Document.h Document.cpp
 	g++ -g -c Document.cpp
 
-Stack.o: Stack.cpp Stack.h Document.h LinkedList.h
+Stack.o: Stack.cpp Stack.h Document.h Linked_List.h
 	g++ -g -c Stack.cpp
 
-Queue.o: Queue.cpp Queue.h Document.h LinkedList.h
+Queue.o: Queue.cpp Queue.h Document.h Linked_List.h
 	g++ -g -c Queue.cpp
 
 Office.o: Office.h Office.cpp Document.h
 	g++ -g -c Office.cpp
 
-LinkedList.o: LinkedList.h LinkedList.cpp Document.h
-	g++ -g -c LinkedList.cpp
+Linked_List.o: Linked_List.h Linked_List.cpp Document.h
+	g++ -g -c Linked_List.cpp
 
 main.o: main.cpp Office.h
 	g++ -g -c main.cpp

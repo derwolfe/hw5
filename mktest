@@ -1,3 +1,3 @@
-g++ -g -c llp.cpp Document.cpp doc_test.cpp 
-g++ Document.o llp.o doc_test.o  -o test
+g++ -g -c llp.cpp Document.cpp Stack.cpp Queue.cpp doc_test.cpp 
+g++ Document.o llp.o doc_test.o Stack.o Queue.o -o test
 
