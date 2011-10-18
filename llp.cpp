@@ -41,7 +41,6 @@ Double_list::Double_list (const Double_list& a_list)
  * this will remove the first element of the loop on EACH 
  * iteration of the loop.
  *
- * Reimp with new remove. 
  */
 Double_list::~Double_list() 
 {
@@ -81,8 +80,8 @@ void Double_list::doc_add (Document *new_doc)
   /* Two cases (1) the list is empty, and (2) the list isn't empty
    * CASE 1 - add initial node to the list, populate the doc
    */
-  Double_node *data_ptr  = new Double_node; 
-  data_ptr->doc         = new_doc;
+  Double_node *data_ptr = new Double_node; 
+  data_ptr->doc = new_doc;
   if (size == 0) {
     head           = data_ptr;
     tail           = data_ptr;
@@ -100,7 +99,9 @@ void Double_list::doc_add (Document *new_doc)
   }
   size++;
 }
-
+/* 
+ * Not in use - doc add being used
+ */
 void Double_list::enqueue(Document* new_doc)
 {
   Double_node *data_ptr = new Double_node;
@@ -257,16 +258,12 @@ Document* Double_list::dequeue()
     return NULL;
   } else {
      /* the list is input backwards. change how items are added so it looks
-      * pretty enough for the test to pass. HEAD IS BY convention the end of
-      * the queue. i.e.  head -> elements -> tail <FRONT
+      * pretty enough for the test to pass.  
       */
     Double_node *target = head;
-//    Double_node *target = tail;
-    // tail pointer isn't being set correctly, right now it is NULL!
     Document* doc;
     if (size > 1) {
       doc = target->doc;
-//      tail = target->prev;
       head = head->next;
       delete target;
       target = NULL;
@@ -275,9 +272,9 @@ Document* Double_list::dequeue()
     } else if (size == 1) {
       doc = target->doc;
       delete target;
+      target = NULL;
       tail = NULL;
       head = NULL;
-      target = NULL;
       size = 0;
       return doc;
     }
@@ -297,27 +294,21 @@ void Double_list::print(ostream& os)
 }
 /* modified for queue, i = 0 is from head to tail, i = 1 tail to head
  */
-void Double_list::print_both(ostream& os, int i)
+void Double_list::print_back(ostream& os)
 {
-  Double_node* cur; 
-  if (i == 0) {
-    cur = head;
-    while (cur != NULL) {
-      os << cur->doc->get_name() << " ";
-      cur = cur->next;
-    }
-  } else if (i == 1) {
-    cur = tail;
+  Double_node* cur = tail;  
+  if (size > 1) {
     while (cur != NULL) {
       os << cur->doc->get_name() << " ";
       cur = cur->prev;
     }
+    /* I wrote a bug and am having trouble finding it. This is hopefully a
+     * temporary fix.
+     */
+  } else {
+    os << cur->doc->get_name() << " ";
   }
 }
-
-
-
-//void Double_list::print_back(ostream& os)
 
 /* 
  * PRIVATE find method that should search the 
